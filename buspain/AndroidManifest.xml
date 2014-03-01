@@ -17,15 +17,26 @@
         <activity
             android:name="uk.co.civichack.buspain.MainActivity"
             android:label="@string/app_name" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name="uk.co.civichack.buspain.ComplaintActivity"
+            android:label="@string/title_activity_complaint" >
+        </activity>
+        <activity
+            android:name="uk.co.civichack.buspain.Home"
+            android:label="@string/title_activity_home" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="uk.co.civichack.buspain.ComplaintActivity"
-            android:label="@string/title_activity_complaint" >
         </activity>
     </application>
 

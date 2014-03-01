@@ -2,6 +2,7 @@ package uk.co.civichack.buspain;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +53,15 @@ public class MainActivity extends Activity {
 			
 		});
 
+		start.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(),ComplaintActivity.class);
+			    startActivity(intent);
+			}
+			
+		});
 	}
 
 	@Override
