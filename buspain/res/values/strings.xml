@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">buspain</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="bus_no">Bus No.</string>
+    <string name="bus_company">Bus Company</string>
+    <string name="bus_expectedtime">Bus ExpectedTime</string>
+    
+</resources>
