@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -19,6 +20,8 @@ public class MainActivity extends Activity {
 	private Button arrive = null;
 	private Button start = null;
 	private Button reset = null;
+	private TextView busNoTxt = null;
+	private Spinner busCompaneyTxt=null;
 	private TimePicker expectedTime = null;
 	private int expectedTime_hour, expectedTime_minute;
 	private int waitingminutes = 0;
@@ -34,6 +37,8 @@ public class MainActivity extends Activity {
 		arrive = (Button) this.findViewById(R.id.button2);
 		start = (Button) this.findViewById(R.id.start);
 		reset = (Button) this.findViewById(R.id.bus_reset);
+		busNoTxt=(TextView) this.findViewById(R.id.bus_no_txt);
+		busCompaneyTxt=(Spinner) this.findViewById(R.id.bus_company_list);
 		// expectedTime = (TimePicker) this.findViewById(R.id.timePicker1);
 
 		setListeners();
@@ -69,14 +74,14 @@ public class MainActivity extends Activity {
 					} else {
 						waitingminutes = 60
 								* (nowTime.getHours() - expectedTime_hour)
-								+ expectedTime_minute - nowTime.getMinutes();
+								- expectedTime_minute + nowTime.getMinutes();
 					}
 				} else {
 					waitingminutes = nowTime.getMinutes() - expectedTime_minute;
 				}
 				
-				TextView txt=(TextView) findViewById(R.id.bus_no_txt);
-				txt.setText(String.valueOf(waitingminutes));
+				//TextView txt=(TextView) findViewById(R.id.bus_no_txt);
+				//txt.setText(String.valueOf(waitingminutes));
 			}
 
 		});
@@ -85,8 +90,13 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
 				Intent intent = new Intent(getApplicationContext(),
 						ComplaintActivity.class);
+				intent.putExtra("busNo", busNoTxt.getText().toString());
+				intent.putExtra("waitingtime", waitingminutes);
+				intent.putExtra("busCompaney", busCompaneyTxt.getSelectedItem().toString());
+				
 				startActivity(intent);
 			}
 

@@ -8,7 +8,9 @@
     <string name="bus_company">Bus Company</string>
     <string name="bus_expectedtime">Bus ExpectedTime</string>
     <string name="bus_prompt">Choose a bus company</string>
-
+    <string name="bus_late">Waiting Time</string>
+	<string name="stop_location">Stop</string>
+    
     <string-array name="bus_companies">
         <item>Arriva</item>
         <item>First</item>
