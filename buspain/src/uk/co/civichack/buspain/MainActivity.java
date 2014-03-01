@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class MainActivity extends Activity {
@@ -21,71 +22,74 @@ public class MainActivity extends Activity {
 	private TimePicker expectedTime = null;
 	private int expectedTime_hour, expectedTime_minute;
 	private int waitingminutes = 0;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		TimePicker t = (TimePicker) this.findViewById(R.id.timePicker1);
-		t.setIs24HourView(true);
+		expectedTime = (TimePicker) this.findViewById(R.id.timePicker1);
+		expectedTime.setIs24HourView(true);
 
 		late = (Button) this.findViewById(R.id.button1);
 		arrive = (Button) this.findViewById(R.id.button2);
 		start = (Button) this.findViewById(R.id.start);
 		reset = (Button) this.findViewById(R.id.bus_reset);
-		expectedTime = (TimePicker) this.findViewById(R.id.bus_expectedtime);
+		// expectedTime = (TimePicker) this.findViewById(R.id.timePicker1);
 
 		setListeners();
 	}
 
 	private void setListeners() {
-		
+
 		arrive.setEnabled(false);
-		late.setOnClickListener(new OnClickListener(){
+		late.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				late.setEnabled(false);
 				arrive.setEnabled(true);
-				expectedTime_hour = (Integer) expectedTime.getTag(Calendar.HOUR_OF_DAY);
-				expectedTime_minute = (Integer) expectedTime.getTag(Calendar.MINUTE);
-				Date nowTime = new Date();
-				if(nowTime.getHours() > expectedTime_hour){
-					if(nowTime.getMinutes() > expectedTime_minute){
-						waitingminutes = 60*(nowTime.getHours()-expectedTime_hour) + 
-								nowTime.getMinutes() - expectedTime_minute;
-					}
-					else{
-						waitingminutes = 60*(nowTime.getHours()-expectedTime_hour) +
-								expectedTime_minute - nowTime.getMinutes();
-					}
-				}
-				else{
-					waitingminutes = nowTime.getMinutes() - expectedTime_minute;
-				}
+				
 			}
-			
-			
+
 		});
-		arrive.setOnClickListener(new OnClickListener(){
+		arrive.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				late.setEnabled(true);
 				arrive.setEnabled(false);
+				expectedTime_hour = expectedTime.getCurrentHour();
+				expectedTime_minute = expectedTime.getCurrentMinute();
+				Date nowTime = new Date();
+				if (nowTime.getHours() > expectedTime_hour) {
+					if (nowTime.getMinutes() > expectedTime_minute) {
+						waitingminutes = 60
+								* (nowTime.getHours() - expectedTime_hour)
+								+ nowTime.getMinutes() - expectedTime_minute;
+					} else {
+						waitingminutes = 60
+								* (nowTime.getHours() - expectedTime_hour)
+								+ expectedTime_minute - nowTime.getMinutes();
+					}
+				} else {
+					waitingminutes = nowTime.getMinutes() - expectedTime_minute;
+				}
+				
+				TextView txt=(TextView) findViewById(R.id.bus_no_txt);
+				txt.setText(String.valueOf(waitingminutes));
 			}
-			
+
 		});
 
-		start.setOnClickListener(new OnClickListener(){
+		start.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),ComplaintActivity.class);
-			    startActivity(intent);
+				Intent intent = new Intent(getApplicationContext(),
+						ComplaintActivity.class);
+				startActivity(intent);
 			}
-			
+
 		});
 	}
 
