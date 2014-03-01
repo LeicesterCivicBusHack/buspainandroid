@@ -1,5 +1,8 @@
 package uk.co.civichack.buspain;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -14,6 +17,10 @@ public class MainActivity extends Activity {
 	private Button arrive = null;
 	private Button start = null;
 	private Button reset = null;
+	private TimePicker expectedTime = null;
+	private int expectedTime_hour, expectedTime_minute;
+	private int waitingminutes = 0;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,7 @@ public class MainActivity extends Activity {
 		arrive = (Button) this.findViewById(R.id.button2);
 		start = (Button) this.findViewById(R.id.start);
 		reset = (Button) this.findViewById(R.id.bus_reset);
+		expectedTime = (TimePicker) this.findViewById(R.id.bus_expectedtime);
 
 		setListeners();
 	}
@@ -39,7 +47,24 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				late.setEnabled(false);
 				arrive.setEnabled(true);
+				expectedTime_hour = (Integer) expectedTime.getTag(Calendar.HOUR_OF_DAY);
+				expectedTime_minute = (Integer) expectedTime.getTag(Calendar.MINUTE);
+				Date nowTime = new Date();
+				if(nowTime.getHours() > expectedTime_hour){
+					if(nowTime.getMinutes() > expectedTime_minute){
+						waitingminutes = 60*(nowTime.getHours()-expectedTime_hour) + 
+								nowTime.getMinutes() - expectedTime_minute;
+					}
+					else{
+						waitingminutes = 60*(nowTime.getHours()-expectedTime_hour) +
+								expectedTime_minute - nowTime.getMinutes();
+					}
+				}
+				else{
+					waitingminutes = nowTime.getMinutes() - expectedTime_minute;
+				}
 			}
+			
 			
 		});
 		arrive.setOnClickListener(new OnClickListener(){
